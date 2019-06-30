@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+import os
+import sys
+from datetime import datetime
+
+blog_path = '/home/arebel/blog/karlo.licudine.me/content/'
+title = sys.argv[1]
+slug = sys.argv[2]
+date = sys.argv[3] # Format: Friday, 06/28/2019
+time = sys.argv[4] # Format: 23:59
+
+tags = sys.argv[5] # :tag1:tag2:
+last_index = len(tags) - 1
+
+tags = tags[1:last_index]
+tags = str.split(tags, ':')
+
+category = tags[0]
+
+stags = ''
+for t in tags:
+    stags += t + ' '
+
+tags = stags
+
+content = sys.argv[6]
+
+file_name = slug
+
+with open(blog_path + file_name + '.md', 'w+') as f:
+    f.write('Title: ' + title + '\n')
+
+    parsed_date = datetime.strptime(date + ', ' + time, '%A, %m/%d/%Y, %H:%M')
+    parsed_date = parsed_date.strftime("%Y-%m-%d %H:%M")
+    
+    f.write('Date: ' + parsed_date + '\n')
+    f.write('Slug: ' + slug + '\n')
+    f.write('Tags: ' + tags + '\n')
+    f.write('Category: ' + category + '\n\n')
+    f.write(content)
+
