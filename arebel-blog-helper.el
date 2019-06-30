@@ -1,13 +1,17 @@
 (defun arebel-upload-journal-entry ()
   "Convert a org-journal entry into a Pelican blog entry by parsing the entry and then calling a Python script that does the conversion."
   (interactive)
-  (let* ((title (read-string "Enter title: "))
-	 (slug (downcase (replace-regexp-in-string " " "-" (replace-regexp-in-string "-" " " title))))
+  (let* ((is-private (yes-or-no-p "Is this a private post?: "))
 	 (time (nth 4 (org-heading-components)))
-	 (tags (nth 5 (org-heading-components)))
-	 (content (org-get-entry))
 	 (date (progn (outline-up-heading 1)
-		      (nth 4 (org-heading-components)))))
+		      (nth 4 (org-heading-components))))
+	 (title (if is-private
+		    (replace-regexp-in-string "/" "-"
+					      (concat (car (last (split-string date ", "))) "-" time))
+		  (read-string "Enter title: ")))
+	 (slug (downcase (replace-regexp-in-string " " "-" (replace-regexp-in-string "-" " " title))))
+	 (tags (nth 5 (org-heading-components)))
+	 (content (org-get-entry)))
     (shell-command
      (format "%s %s %s %s %s %s %s"
 	     "arebel-blog-helper"
