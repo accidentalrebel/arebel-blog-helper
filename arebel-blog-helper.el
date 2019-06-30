@@ -28,4 +28,5 @@
 	 (target-file-path (concat "~/blog/karlo.licudine.me/content/images/" file-name "." extension)))
     (insert (concat "![" file-name "]({attach}/images/" file-name "." extension ")"))
     (copy-file file-path target-file-path)
+    (shell-command (concat "convert " target-file-path " -resize 500x500\\> " target-file-path))
     ))
