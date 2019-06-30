@@ -5,7 +5,7 @@ from datetime import datetime
 
 blog_path = '/home/arebel/blog/karlo.licudine.me/content/'
 title = sys.argv[1]
-slug = sys.argv[2]
+slug = sys.argv[2].lower()
 date = sys.argv[3] # Format: Friday, 06/28/2019
 time = sys.argv[4] # Format: 23:59
 
