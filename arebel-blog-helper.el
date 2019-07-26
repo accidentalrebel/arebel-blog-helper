@@ -13,7 +13,7 @@
 		    (replace-regexp-in-string "/" "-"
 					      (concat (car (last (split-string date ", "))) "-" time))
 		  (read-string "Enter title: ")))
-	 (slug (downcase (replace-regexp-in-string " " "-" (replace-regexp-in-string "-" " " title)))))
+	 (slug (downcase (replace-regexp-in-string " " "-" (replace-regexp-in-string "[^a-zA-Z0-9-]" "" title)))))
     (shell-command
      (format "%s %s %s %s %s %s %s"
     	     "arebel-blog-helper"

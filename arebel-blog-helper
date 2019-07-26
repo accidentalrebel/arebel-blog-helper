@@ -19,7 +19,7 @@ category = tags[0]
 
 stags = ''
 for t in tags:
-    stags += t + ' '
+    stags += t + ', '
 
 tags = stags
 
