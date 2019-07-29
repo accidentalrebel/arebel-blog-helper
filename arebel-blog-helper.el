@@ -13,7 +13,7 @@
 		    (replace-regexp-in-string "/" "-"
 					      (concat (car (last (split-string date ", "))) "-" time))
 		  (read-string "Enter title: ")))
-	 (slug (downcase (replace-regexp-in-string " " "-" (replace-regexp-in-string "[^a-zA-Z0-9-]" "" title)))))
+	 (slug (downcase (replace-regexp-in-string " " "-" (replace-regexp-in-string "[^a-zA-Z0-9-]" " " title)))))
     (shell-command
      (format "%s %s %s %s %s %s %s"
     	     "arebel-blog-helper"
@@ -28,8 +28,9 @@
 (defun arebel-insert-image ()
   "Insert the selected file into the blog article.  It automatically copies the file into the correct image folder."
   (interactive)
-  (let* ((file-path (read-file-name "Get file name: "))
-	 (file-name (read-string "File name to use: "))
+  (let* ((file-path (read-file-name "File to upload: "))
+	 (file-name (concat (replace-regexp-in-string "\\.md" "" (buffer-name)) "-"
+		     (read-string "File name postfix: ")))
 	 (extension (car (cdr (split-string (car (last (split-string file-path "/"))) "\\."))))
 	 (target-file-path (concat "~/blog/karlo.licudine.me/content/images/" file-name "." extension)))
     (insert (concat "![" file-name "]({attach}/images/" file-name "." extension ")"))
